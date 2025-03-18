@@ -66,7 +66,7 @@ func (h *TodoHandler) GetTodoById(w http.ResponseWriter, r *http.Request) {
 
 func (h *TodoHandler) UpdateTodoById(w http.ResponseWriter, r *http.Request) {
 	// log.Print(r)
-	fmt.Fprintf(w, "UpdateTodoById - WIP \n")
+	fmt.Fprintf(w, "UpdateTodoById \n")
 	params := mux.Vars(r)
 	log.Print(params)
 
@@ -84,6 +84,23 @@ func (h *TodoHandler) UpdateTodoById(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	json.NewEncoder(w).Encode(todo)
+}
+
+func (h *TodoHandler) DeleteTodoById(w http.ResponseWriter, r *http.Request) {
+	// log.Print(r)
+	fmt.Fprintf(w, "DeleteTodoById - WIP \n")
+	params := mux.Vars(r)
+	log.Print(params)
+
+	var todo models.Todo
+	err := h.TodoService.DeleteTodoById(&todo, params["id"])
+	if err != nil {
+		http.Error(w, "Error deleting Todo", http.StatusInternalServerError)
+		return
+	}
+	log.Print("deleted:", todo)
 
 	json.NewEncoder(w).Encode(todo)
 }

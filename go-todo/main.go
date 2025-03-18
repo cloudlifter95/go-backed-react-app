@@ -25,6 +25,7 @@ func main() {
 	// Create a new router
 	r := mux.NewRouter()
 	r.Use(middleware.LoggingMiddleware)
+	r.Use(middleware.EnableCORS)
 
 	// Register routes
 	routes.SetupRoutes(r, DB)

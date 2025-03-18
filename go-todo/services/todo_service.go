@@ -60,3 +60,13 @@ func (s *TodoService) UpdateTodoById(todo *models.Todo, id string) error {
 
 	return err
 }
+
+func (s *TodoService) DeleteTodoById(todo *models.Todo, id string) error {
+	var err error = nil
+
+	s.DB.First(todo, id)
+
+	s.DB.Delete(todo, id)
+
+	return err
+}

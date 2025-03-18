@@ -19,6 +19,7 @@ func SetupRoutes(r *mux.Router, db *gorm.DB) {
 	r.HandleFunc("/todos", todoHandler.CreateTodo).Methods("POST")
 	r.HandleFunc("/todos/{id}", todoHandler.GetTodoById).Methods("GET")
 	r.HandleFunc("/todos/{id}", todoHandler.UpdateTodoById).Methods("PUT")
+	r.HandleFunc("/todos/{id}", todoHandler.DeleteTodoById).Methods("DELETE")
 	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "yops") }).Methods("GET")
 
 }
