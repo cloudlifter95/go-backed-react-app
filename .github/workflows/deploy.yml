@@ -56,7 +56,7 @@ jobs:
 
       - name: Update README with CI Badge
         run: |
-          STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg)"
+          STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/deploy.yml/badge.svg)"
           sed -i '1s|^|'"$STATUS"'\n\n|' README.md
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
