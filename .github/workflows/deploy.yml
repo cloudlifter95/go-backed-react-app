@@ -56,13 +56,27 @@ jobs:
 
       - name: Update README with CI Badge
         run: |
-          STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/deploy.yml/badge.svg)"
-          sed -i '1s|^|'"$STATUS"'\n\n|' README.md
+          if [ "${{ job.status }}" == "success" ]; then
+              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg?branch=main)"
+          else
+              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg?branch=main&status=failure)"
+          fi
+
+          # Replace the badge in README.md, ensuring only one badge is present
+          if [[ "$OSTYPE" == "darwin"* ]]; then
+              sed -i '' '1s|^.*\!\[CI\].*|'"$STATUS"'|g' README.md  # macOS
+          else
+              sed -i '1s|^.*\!\[CI\].*|'"$STATUS"'|g' README.md  # Linux/Windows
+          fi
+
+          # Git setup
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
+
+          # Add, commit and push
           git add README.md
           git commit -m "Update README with CI badge" || echo "No changes to commit"
-          git push || echo "No changes to push"
+          git push https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:${{ github.ref }} || echo "No changes to push"
 
       - name: Stop Containers
         run: docker-compose down
