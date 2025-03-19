@@ -1,4 +1,4 @@
-![CI](https://github.com/cloudlifter95/go-backed-react-app/actions/workflows/deploy.yml/badge.svg?branch=main![CI](https://github.com/cloudlifter95/go-backed-react-app/actions/workflows/deploy.yml/badge.svg?branch=main)status=failure)
+![CI](https://github.com/cloudlifter95/go-backed-react-app/actions/workflows/deploy.yml/badge.svg?branch=main)
 
 ``` bash
 go-todo/                # Backend (Go)
