@@ -14,6 +14,9 @@ jobs:
     # container:
     #     image: docker:19.03.12
     #     options: --privileged # if needed
+
+    permissions:
+      contents: write  # Allow write access to repository contents
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
