@@ -1,0 +1,41 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build and Start Services
+        run: docker-compose up --build -d
+
+    #   - name: Seed Database
+    #     run: docker exec $(docker ps -qf "name=backend") /app/scripts/seed_db.sh
+
+    #   - name: Run Backend Tests
+    #     run: docker exec $(docker ps -qf "name=backend") go test ./...
+
+    #   - name: Run Frontend Tests
+    #     run: docker exec $(docker ps -qf "name=frontend") npm run test
+
+      - name: Update README with CI Badge
+        run: |
+          STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg)"
+          sed -i '1s|^|'"$STATUS"'\n\n|' README.md
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "Update README with CI badge" || echo "No changes to commit"
+          git push || echo "No changes to push"
+
+      - name: Stop Containers
+        run: docker-compose down
