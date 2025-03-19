@@ -1,3 +1,5 @@
+![CI](https://github.com/cloudlifter95/go-backed-react-app/actions/workflows/deploy.yml/badge.svg)
+
 ``` bash
 go-todo/                # Backend (Go)
 │── main.go             # Entry point of the application
