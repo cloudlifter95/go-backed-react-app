@@ -57,9 +57,9 @@ jobs:
       - name: Update README with CI Badge
         run: |
           if [ "${{ job.status }}" == "success" ]; then
-              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg?branch=main)"
+              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/deploy.yml/badge.svg?branch=main)"
           else
-              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/ci.yml/badge.svg?branch=main&status=failure)"
+              STATUS="![CI](https://github.com/${{ github.repository }}/actions/workflows/deploy.yml/badge.svg?branch=main&status=failure)"
           fi
 
           # Replace the badge in README.md, ensuring only one badge is present
