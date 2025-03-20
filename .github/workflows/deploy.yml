@@ -42,11 +42,13 @@ jobs:
     #       curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
     #       chmod +x /usr/local/bin/docker-compose
           
-    #   - name: Build and Start Services
-    #     run: docker-compose up --build -d
+      - name: Build and Start Services
+        run: docker-compose up --build -d
 
-    #   - name: Seed Database
-    #     run: docker exec $(docker ps -qf "name=backend") /app/scripts/seed_db.sh
+      - name: Seed Database
+        run: |
+          docker exec $(docker ps -qf "name=backend") chmod +x /app/scripts/seed_db.sh
+          docker exec $(docker ps -qf "name=backend") /app/scripts/seed_db.sh /app/todos.db
 
     #   - name: Run Backend Tests
     #     run: docker exec $(docker ps -qf "name=backend") go test ./...

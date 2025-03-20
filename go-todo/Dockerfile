@@ -21,4 +21,7 @@ COPY --from=build /app/dist/main /app/dist/main
 # Copy the source code (optional)
 COPY . .
 
+# Install SQLite (needed for debugging)
+RUN apt-get update && apt-get install -y sqlite3
+
 CMD ["/app/dist/main"]
