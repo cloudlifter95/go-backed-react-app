@@ -12,3 +12,9 @@ services:
     # depends_on:
     #   - db
     # command: bash
+  frontend:
+    build: ./go-todo-frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
