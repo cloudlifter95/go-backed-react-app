@@ -14,35 +14,65 @@ The application follows the **MVC (Model-View-Controller) + Service Layer** patt
 > Authentication module is WIP
 
 ```
-📂 project-root
-├── 📂 backend      # Go backend (API & Business Logic)
-│   ├── 📂 models  # Database models
-│   ├── 📂 services # Business logic (DB interactions)
-│   ├── 📂 handlers # API request handling (controllers)
-│   ├── 📂 middleware # Request/response middleware (CORS, Logging, Auth)
-│   ├── 📂 migrations # DB migrations & seeding scripts
-│   ├── main.go    # Application entry point
-│   ├── Dockerfile # Backend Dockerfile (multi-stage build)
-│   ├── go.mod     # Go dependencies
-│   ├── go.sum     # Go dependency lock file
-│   ├── routes.go  # API routes
-│   ├── db.go      # Database connection setup
-│   ├── tests      # Backend tests (unit & integration)
-│
-├── 📂 frontend     # React + TypeScript frontend
-│   ├── 📂 src     # Frontend source files
-│   │   ├── 📂 components # Reusable UI components
-│   │   ├── 📂 pages # Page-level components
-│   │   ├── 📂 api # API client for backend communication
-│   │   ├── 📂 tests # Frontend tests (unit & integration)
-│   │   ├── App.tsx # Root component
-│   │   ├── main.tsx # Entry point
-│   ├── Dockerfile  # Frontend Dockerfile (multi-stage build with Nginx)
-│   ├── package.json # Frontend dependencies
-│   ├── vite.config.ts # Vite configuration
-│
-├── docker-compose.yml # Docker orchestration for backend, frontend & DB
-├── README.md  # Project Documentation
+tree -I 'node_modules|cache|test_*' -L 3
+
+
+go-pg
+├── README.md
+├── docker-compose.yml
+├── go-todo
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── db
+│   │   └── database.go
+│   ├── go.mod
+│   ├── go.sum
+│   ├── handlers
+│   │   └── todo_handler.go
+│   ├── main.go
+│   ├── middleware
+│   │   ├── cors.go
+│   │   └── logging.go
+│   ├── models
+│   │   └── todo.go
+│   ├── routes
+│   │   └── routes.go
+│   ├── scripts
+│   │   └── seed_db.sh
+│   ├── services
+│   │   └── todo_service.go
+│   ├── tests
+│   ├── tmp
+│   │   ├── build-errors.log
+│   │   └── main
+│   └── todos.db
+├── go-todo-frontend
+│   ├── Dockerfile
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.css
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.js
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.tsx
+│   │   ├── api.ts
+│   │   ├── assets
+│   │   ├── index.css
+│   │   ├── main.tsx
+│   │   ├── types.ts
+│   │   └── vite-env.d.ts
+│   ├── tailwind.config.js
+│   ├── tsconfig.app.json
+│   ├── tsconfig.json
+│   ├── tsconfig.node.json
+│   └── vite.config.ts
+├── scaffold_dir_struc.sh
+└── todos.db
 ```
 
 ## **Backend (Go)**
