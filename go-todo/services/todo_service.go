@@ -11,7 +11,7 @@ import (
 type TodoServiceInterface interface {
 	GetAllTodos() ([]models.Todo, error)
 	CreateTodo(todo *models.Todo) error
-	GetTodoById(todo *models.Todo, id string) error
+	GetTodoById(todo *models.Todo, id string) (models.Todo, error)
 	UpdateTodoById(todo *models.Todo, id string) error
 	DeleteTodoById(todo *models.Todo, id string) error
 }
@@ -48,12 +48,12 @@ func (s *TodoService) CreateTodo(todo *models.Todo) error {
 	return err
 }
 
-func (s *TodoService) GetTodoById(todo *models.Todo, id string) error {
+func (s *TodoService) GetTodoById(todo *models.Todo, id string) (models.Todo, error) {
 	var err error = nil
 
 	s.DB.First(todo, id)
 
-	return err
+	return *todo, err
 }
 
 // UpdateTodo applies business logic and calls the DB

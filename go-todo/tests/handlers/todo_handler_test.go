@@ -10,9 +10,11 @@ import (
 	"log"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
 	"testing"
 	"time"
 
+	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
@@ -162,4 +164,73 @@ func TestCreateTodo_InvalidInput(t *testing.T) {
 	// Assert that the response is 400 Bad Request
 	assert.Equal(t, http.StatusBadRequest, rr.Code)
 	assert.Equal(t, "Invalid input\n", rr.Body.String())
+}
+
+func TestGetTodoById(t *testing.T) {
+	// Create a mock service
+	mockService := new(mocks.TodoServiceInterface)
+
+	handler := handlers.TodoHandler{TodoService: mockService}
+
+	// Define expected mock behavior
+	mockTodos := []models.Todo{
+		{Title: "Test Todo", Completed: false},
+		{Title: "Another Todo", Completed: true},
+	}
+
+	id := "1"
+	intId, err := strconv.Atoi(id)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	var todo models.Todo
+
+	// mockService.On("GetTodoById", mock.AnythingOfType("*models.Todo"), id).
+	// 	Run(func(args mock.Arguments) {
+	// 		todoArg := args.Get(0).(*models.Todo)
+	// 		*todoArg = mockTodos[intId-1] // ⚠️ This replaces the pointer's memory NOT NEEDED. FOR DOC ONLY
+	// 	}).
+	// 	Return(mockTodos[intId-1], nil)
+
+	mockService.On("GetTodoById", mock.AnythingOfType("*models.Todo"), id).
+		Return(mockTodos[intId-1], nil)
+
+	// Create a new HTTP POST request with invalid data
+	r, err := http.NewRequest("GET", "/todos/"+id, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	r = mux.SetURLVars(r, map[string]string{"id": id})
+
+	// Create a ResponseRecorder to capture the response
+	rr := httptest.NewRecorder()
+
+	start := time.Now()
+
+	// Log request details
+	var requestBody bytes.Buffer
+	if r.Body != nil {
+		bodyBytes, _ := io.ReadAll(r.Body)
+		requestBody.Write(bodyBytes)
+		r.Body = io.NopCloser(bytes.NewBuffer(bodyBytes)) // Reset body for next handler
+	}
+	log.Printf("Request: %s %s | Body: %s", r.Method, r.URL.Path, requestBody.String())
+
+	// Call the CreateTodo handler
+	handler.GetTodoById(rr, r)
+
+	duration := time.Since(start)
+
+	// Log response details
+	log.Printf("Response: %d | Duration: %v | Body: %s\n", rr.Code, duration, rr.Body.String())
+
+	// Assertions
+	err2 := json.NewDecoder(rr.Body).Decode(&todo) // Decode the response body
+	require.NoError(t, err2)                       // Ensure no error occurred
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, mockTodos[intId-1], todo)
+
 }

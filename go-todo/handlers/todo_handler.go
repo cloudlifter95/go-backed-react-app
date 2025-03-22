@@ -51,17 +51,19 @@ func (h *TodoHandler) CreateTodo(w http.ResponseWriter, r *http.Request) {
 
 func (h *TodoHandler) GetTodoById(w http.ResponseWriter, r *http.Request) {
 	// log.Print(r)
-	fmt.Fprintf(w, "GetTodoByID\n")
+	// fmt.Fprintf(w, "GetTodoByID\n")
 	params := mux.Vars(r)
 	log.Print(params)
 	var todo models.Todo
-	err := h.TodoService.GetTodoById(&todo, params["id"])
+	mytodo, err := h.TodoService.GetTodoById(&todo, params["id"])
 	if err != nil {
 		http.Error(w, "Error fetching Todo", http.StatusNotFound)
 		return
 	}
 
-	json.NewEncoder(w).Encode(todo)
+	json.NewEncoder(w).Encode(mytodo)
+
+	// return *todo, err
 }
 
 func (h *TodoHandler) UpdateTodoById(w http.ResponseWriter, r *http.Request) {

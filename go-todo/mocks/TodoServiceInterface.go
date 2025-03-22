@@ -80,21 +80,31 @@ func (_m *TodoServiceInterface) GetAllTodos() ([]models.Todo, error) {
 }
 
 // GetTodoById provides a mock function with given fields: todo, id
-func (_m *TodoServiceInterface) GetTodoById(todo *models.Todo, id string) error {
+func (_m *TodoServiceInterface) GetTodoById(todo *models.Todo, id string) (models.Todo, error) {
 	ret := _m.Called(todo, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetTodoById")
 	}
 
-	var r0 error
-	if rf, ok := ret.Get(0).(func(*models.Todo, string) error); ok {
+	var r0 models.Todo
+	var r1 error
+	if rf, ok := ret.Get(0).(func(*models.Todo, string) (models.Todo, error)); ok {
+		return rf(todo, id)
+	}
+	if rf, ok := ret.Get(0).(func(*models.Todo, string) models.Todo); ok {
 		r0 = rf(todo, id)
 	} else {
-		r0 = ret.Error(0)
+		r0 = ret.Get(0).(models.Todo)
 	}
 
-	return r0
+	if rf, ok := ret.Get(1).(func(*models.Todo, string) error); ok {
+		r1 = rf(todo, id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
 }
 
 // UpdateTodoById provides a mock function with given fields: todo, id

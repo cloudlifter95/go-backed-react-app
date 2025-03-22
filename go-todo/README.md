@@ -105,3 +105,10 @@ run reflex: `reflex -r '\.go$' -- sh -c 'go run main.go'`
 you might need to ensure the Go binary directory is in your PATH. The default location is usually $GOPATH/bin or $HOME/go/bin (depending on your Go version).
 `export PATH=$PATH:$(go env GOPATH)/bin`
 run air: `air`
+
+
+## Go test commands
+
+`go test ./tests/handlers/ -run TestCreateTodo_InvalidInput -v`
+`go test ./...`
+
