@@ -50,8 +50,8 @@ jobs:
           docker exec $(docker ps -qf "name=backend") chmod +x /app/scripts/seed_db.sh
           docker exec $(docker ps -qf "name=backend") /app/scripts/seed_db.sh /app/todos.db
 
-    #   - name: Run Backend Tests
-    #     run: docker exec $(docker ps -qf "name=backend") go test ./...
+      - name: Run Backend Tests
+        run: docker exec $(docker ps -qf "name=backend") go test ./...
 
     #   - name: Run Frontend Tests
     #     run: docker exec $(docker ps -qf "name=frontend") npm run test
