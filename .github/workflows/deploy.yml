@@ -53,8 +53,8 @@ jobs:
       - name: Run Backend Tests
         run: docker exec $(docker ps -qf "name=backend") go test ./...
 
-    #   - name: Run Frontend Tests
-    #     run: docker exec $(docker ps -qf "name=frontend") npm run test
+      - name: Run Frontend Tests
+        run: docker exec $(docker ps -qf "name=frontend") npm run test
 
       - name: Update README with CI Badge
         if: always()
