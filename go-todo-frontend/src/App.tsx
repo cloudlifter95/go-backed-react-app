@@ -11,11 +11,7 @@ function App() {
   const [count, setCount] = useState<number>(0);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [posts, setPosts] = useState<Post[]>([]);
-  const [pokemon, setPokemon] = useState<Pokemon>({
-    name: "Unknown",
-    height: 0,
-    weight: 0,
-  });
+  const [pokemon, setPokemon] = useState<Pokemon | undefined>(undefined);
   useEffect(() => {
     fetchTodos().then(setTodos);
   }, []);
@@ -62,10 +58,20 @@ function App() {
           ))}
         </ul> */}
         <ElementList e_name="Todo" elements={todos} headers={todo_headers} />
-        <ElementList e_name="Posts" elements={posts.slice(1,3)} headers={post_headers} />
-        <h2>{pokemon.name?.toUpperCase()}</h2>
-        {pokemon.sprites?.front_default && (
-          <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+        <ElementList
+          e_name="Posts"
+          elements={posts.slice(1, 3)}
+          headers={post_headers}
+        />
+        {!pokemon ? (
+          <h2>Loading Pokémon...</h2> // or your desired fallback message
+        ) : (
+          <>
+            <h2>{pokemon.name?.toUpperCase()}</h2>
+            {pokemon.sprites?.front_default && (
+              <img src={pokemon.sprites.front_default} alt={pokemon.name} />
+            )}
+          </>
         )}
       </div>
     </>

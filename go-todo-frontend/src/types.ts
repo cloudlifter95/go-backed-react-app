@@ -12,7 +12,7 @@ export interface Post {
   body: string
 }
 
-interface Pokemon {
+export interface Pokemon {
   id: number;
   name: string;
   base_experience: number;

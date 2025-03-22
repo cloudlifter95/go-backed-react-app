@@ -5,16 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npx tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "test": "vitest --config vitest.config.ts"
+    "preview": "npx vite preview",
+    "test": "npx vitest --config vitest.config.ts"
   },
   "dependencies": {
     "axios": "^1.8.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tsc": "^2.0.4"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
