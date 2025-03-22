@@ -14,7 +14,7 @@ import (
 )
 
 type TodoHandler struct {
-	TodoService *services.TodoService
+	TodoService services.TodoServiceInterface
 }
 
 func NewTodoHandler(todoService *services.TodoService) *TodoHandler {

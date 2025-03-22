@@ -8,12 +8,28 @@ import (
 	"gorm.io/gorm"
 )
 
-// TodoService handles the business logic and interacts with the database
-type TodoService struct {
-	DB *gorm.DB
+type TodoServiceInterface interface {
+	GetAllTodos() ([]models.Todo, error)
+	CreateTodo(todo *models.Todo) error
+	GetTodoById(todo *models.Todo, id string) error
+	UpdateTodoById(todo *models.Todo, id string) error
+	DeleteTodoById(todo *models.Todo, id string) error
 }
 
-func NewTodoService(db *gorm.DB) *TodoService {
+type DBInterface interface {
+	Create(value interface{}) *gorm.DB
+	Find(out interface{}, where ...interface{}) *gorm.DB
+	First(out interface{}, where ...interface{}) *gorm.DB
+	Delete(value interface{}, conds ...interface{}) *gorm.DB
+	Save(value interface{}) *gorm.DB
+}
+
+// TodoService handles the business logic and interacts with the database
+type TodoService struct {
+	DB DBInterface
+}
+
+func NewTodoService(db DBInterface) *TodoService {
 	return &TodoService{DB: db}
 }
 
