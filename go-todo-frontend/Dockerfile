@@ -10,7 +10,8 @@ RUN npm install
 # Copy the rest of the source code
 COPY . .
 
-# Build the frontend app
+# Test & Build the frontend app (anything after -- is passed down to script)
+RUN npm run test -- --run
 RUN npm run build
 
 # Runtime stage
